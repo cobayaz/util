@@ -26,6 +26,7 @@
 ```javascript
     const p = require('./promise.limit');
 
+    //res,rej代表promise的resolve,reject
     const makePromise1=(res, rej) => {
         setTimeout(function() {
             console.log(`第1个开始了${new Date().toLocaleTimeString()}`);
@@ -51,9 +52,9 @@
         }, 1000);
     }
 
-    //res,rej代表promise的resolve,reject
     //当你需要使用这种方法时候，第三个隐藏参数需要设置成true
-    p([makePromise],2,true)
+
+    p([makePromise1,makePromise2,makePromise3],2,true)
     .then(re=>{console.log(re)})
 ```
 

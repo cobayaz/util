@@ -36,17 +36,17 @@
     } 
     const makePromise2=(res, rej) => {
         setTimeout(function() {
-            console.log(`第1个开始了${new Date().toLocaleTimeString()}`);
+            console.log(`第2个开始了${new Date().toLocaleTimeString()}`);
             setTimeout(function() {
-                res(`第1个结束了${new Date().toLocaleTimeString()}`);
+                res(`第2个结束了${new Date().toLocaleTimeString()}`);
             }, 1000);
         }, 1000);
     }
     const makePromise3=(res, rej) => {
         setTimeout(function() {
-            console.log(`第1个开始了${new Date().toLocaleTimeString()}`);
+            console.log(`第3个开始了${new Date().toLocaleTimeString()}`);
             setTimeout(function() {
-                res(`第1个结束了${new Date().toLocaleTimeString()}`);
+                res(`第3个结束了${new Date().toLocaleTimeString()}`);
             }, 1000);
         }, 1000);
     }

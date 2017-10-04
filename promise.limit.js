@@ -4,16 +4,6 @@ const ev = new events();
 
 let result = [];
 
-const flag = {
-    end: 'false'
-};
-
-Object.defineProperty(flag, 'end', {
-    set() {
-        end();
-    }
-});
-
 _makePromise = (z, constr) => {
     if (typeof z === 'function') {
         if (constr) {

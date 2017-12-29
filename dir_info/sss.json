@@ -1,0 +1,43 @@
+{
+    "LICENSE": null,
+    "README.md": "text/markdown",
+    "checkerboarderCount": {
+        "ifwin.js": "application/javascript",
+        "win": {
+            "c_win.js": "application/javascript",
+            "r_c_left_win.js": "application/javascript",
+            "r_c_right_win.js": "application/javascript",
+            "r_win.js": "application/javascript"
+        }
+    },
+    "dir_info": {
+        "index.js": "application/javascript",
+        "node_modules": {
+            "mime": {
+                "CHANGELOG.md": "text/markdown",
+                "LICENSE": null,
+                "Mime.js": "application/javascript",
+                "README.md": "text/markdown",
+                "cli.js": "application/javascript",
+                "index.js": "application/javascript",
+                "lite.js": "application/javascript",
+                "package.json": "application/json",
+                "src": {
+                    "README_js.md": "text/markdown",
+                    "build.js": "application/javascript",
+                    "test.js": "application/javascript"
+                },
+                "types": {
+                    "other.json": "application/json",
+                    "standard.json": "application/json"
+                }
+            }
+        },
+        "package.json": "application/json",
+        "sss.json": "application/json",
+        "test.js": "application/javascript",
+        "yarn.lock": null
+    },
+    "promise.limit.js": "application/javascript",
+    "test.js": "application/javascript"
+}

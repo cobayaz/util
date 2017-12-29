@@ -1,0 +1,8 @@
+{
+  "name": "dir_info",
+  "version": "1.0.0",
+  "description": "print or get  information of your dir with json ",
+  "main": "index.js",
+  "author": "swnb",
+  "license": "MIT"
+}

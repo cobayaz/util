@@ -27,6 +27,6 @@ const get_dir_info = async (dirname, object = dir_info) => {
             console.log(file);
         }
     }
-    fs.writeFile('./sss.json', JSON.stringify(dir_info), err => {});
+    return dir_info;
 };
-get_dir_info('../');
+module.exports = get_dir_info;

@@ -1,8 +1,7 @@
-const fs = require('fs');
-fs.readdir('.', (err, file) => {
-    file.forEach(e => {
-        fs.stat(e, (err, stat) => {
-            console.log(stat.isFIFO);
-        });
-    });
-});
+const main = async () => {
+    const dirPath = './';
+    const getDirInfo = require('./index.js');
+    const dir = await getDirInfo(dirPath);
+    console.log(dir);
+};
+main();

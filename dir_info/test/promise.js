@@ -30,8 +30,10 @@ const get_dir_info = async (dirname, object = dir_info) => {
 };
 async function main() {
     console.time('pro');
-    const a = await get_dir_info('../');
+    await get_dir_info('../');
     console.timeEnd('pro');
-    console.log(a);
 }
 main();
+process.on('exit', () => {
+    console.timeEnd('pro');
+});

@@ -31,6 +31,5 @@ const get_dir_info = (dirname, object = dir_info) => {
 };
 
 console.time('pro');
-const a = get_dir_info('../');
+const a = get_dir_info('../../');
 console.timeEnd('pro');
-console.log(a);

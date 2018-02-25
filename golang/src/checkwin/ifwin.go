@@ -1,0 +1,4 @@
+package checkwin
+
+func main() {
+}

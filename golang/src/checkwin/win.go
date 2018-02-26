@@ -7,6 +7,12 @@ package checkwin
 //pos=arrP[index]
 //winCount 输赢数目 unit16 0-2^16
 
+type channel struct {
+	count      int
+	signalChan chan bool
+	winArrChan chan []int
+}
+
 func sort(arr []int, winCount int) ([]int, bool) {
 	//当数组的大小小于winCount的时候,退出false
 	if len(arr) < winCount {
@@ -26,7 +32,7 @@ func sort(arr []int, winCount int) ([]int, bool) {
 	return nil, false
 }
 
-func colWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, signalChan chan bool, winArrChan chan []int) {
+func colWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c channel) {
 	var rowArr []int
 	for i, v := range arrP {
 		//空棋子
@@ -42,12 +48,78 @@ func colWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, sign
 	//排序
 	winArr, winFlag := sort(rowArr, winCount)
 	if winFlag {
-		signalChan <- winFlag
-		winArrChan <- winArr
+		c.signalChan <- winFlag
+		c.winArrChan <- winArr
+		return
 	}
-	signalChan <- winFlag
+	c.signalChan <- winFlag
 }
 
-func rWin() {
+func rowWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c channel) {
+	var colArr []int
+	for i, v := range arrP {
+		//空棋子
+		if arr[i] == 0 {
+			break
+		}
+		//行数相同和元素相同
+		if v[0] == pos[0] && arr[index] == arr[i] {
+			//添加列的数目
+			colArr = append(colArr, v[1])
+		}
+	}
+	//排序
+	winArr, winFlag := sort(colArr, winCount)
+	if winFlag {
+		//赢了就输出
+		c.signalChan <- winFlag
+		c.winArrChan <- winArr
+		return
+	}
+	c.signalChan <- winFlag
+}
 
+func rcLeft(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c channel) {
+	var leftArr []int
+	for i, v := range arrP {
+		//空棋子
+		if arr[i] == 0 {
+			break
+		}
+		//对角线相同和元素相同
+		if v[0]-pos[0] == v[1]-pos[1] && arr[index] == arr[i] {
+			//添加行的数目
+			leftArr = append(leftArr, v[0])
+		}
+	}
+	//排序
+	winArr, winFlag := sort(leftArr, winCount)
+	if winFlag {
+		c.signalChan <- winFlag
+		c.winArrChan <- winArr
+		return
+	}
+	c.signalChan <- winFlag
+}
+func rcRight(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c channel) {
+	var rightArr []int
+	for i, v := range arrP {
+		//空棋子
+		if arr[i] == 0 {
+			break
+		}
+		//右对角线相同和元素相同
+		if v[0]-pos[0] == pos[1]-v[1] && arr[index] == arr[i] {
+			//添加行的数目
+			rightArr = append(rightArr, v[0])
+		}
+	}
+	//排序
+	winArr, winFlag := sort(rightArr, winCount)
+	if winFlag {
+		c.signalChan <- winFlag
+		c.winArrChan <- winArr
+		return
+	}
+	c.signalChan <- winFlag
 }

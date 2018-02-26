@@ -37,7 +37,7 @@ func colWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c ch
 	for i, v := range arrP {
 		//空棋子
 		if arr[i] == 0 {
-			break
+			continue
 		}
 		//列数相同和元素相同
 		if v[1] == pos[1] && arr[index] == arr[i] {
@@ -60,7 +60,7 @@ func rowWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c ch
 	for i, v := range arrP {
 		//空棋子
 		if arr[i] == 0 {
-			break
+			continue
 		}
 		//行数相同和元素相同
 		if v[0] == pos[0] && arr[index] == arr[i] {
@@ -84,7 +84,7 @@ func rcLeft(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c ch
 	for i, v := range arrP {
 		//空棋子
 		if arr[i] == 0 {
-			break
+			continue
 		}
 		//对角线相同和元素相同
 		if v[0]-pos[0] == v[1]-pos[1] && arr[index] == arr[i] {
@@ -106,7 +106,7 @@ func rcRight(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c c
 	for i, v := range arrP {
 		//空棋子
 		if arr[i] == 0 {
-			break
+			continue
 		}
 		//右对角线相同和元素相同
 		if v[0]-pos[0] == pos[1]-v[1] && arr[index] == arr[i] {

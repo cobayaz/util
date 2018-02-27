@@ -14,17 +14,17 @@ module.exports = (fsObject, cb) => {
             const fsWatcher = fs.watch(filepath, (event, filename) => {
                 if (!timeNow) {
                     timeNow = Date.now()
-                    return afterChange()
+                    return cb()
                 }
                 if (Date.now() - timeNow > 1000) {
                     timeNow = Date.now()
-                    afterChange()
+                    cb()
                 }
             })
-            fsObject.close = () => {
+            fsObject.close ? fsObject.close = () => {
                 fsWatcher.close()
-            }
-            fsObject.ok = true
+            } : void 0
+            fsObject.ok ? fsObject = true : void 0
         }
     })
 }

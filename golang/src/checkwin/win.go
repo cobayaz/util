@@ -10,7 +10,7 @@ package checkwin
 type channel struct {
 	count      int
 	signalChan chan bool
-	winArrChan chan []int
+	winArrChan chan [][2]int
 }
 
 func sort(arr []int, winCount int) ([]int, bool) {
@@ -32,8 +32,8 @@ func sort(arr []int, winCount int) ([]int, bool) {
 	return nil, false
 }
 
-func colWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c channel) {
-	var rowArr []int
+func colWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c *channel) {
+	rowArr := make([]int, 0, len(arrP))
 	for i, v := range arrP {
 		//空棋子
 		if arr[i] == 0 {
@@ -46,17 +46,23 @@ func colWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c ch
 		}
 	}
 	//排序
-	winArr, winFlag := sort(rowArr, winCount)
-	if winFlag {
+	winRowArr, winFlag := sort(rowArr, winCount)
+
+	if winFlag && winRowArr != nil {
 		c.signalChan <- winFlag
+		colNum := pos[1]
+		winArr := make([][2]int, len(winRowArr))
+		for i, v := range winRowArr {
+			winArr[i] = [2]int{v, colNum}
+		}
 		c.winArrChan <- winArr
 		return
 	}
 	c.signalChan <- winFlag
 }
 
-func rowWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c channel) {
-	var colArr []int
+func rowWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c *channel) {
+	colArr := make([]int, 0, len(arrP))
 	for i, v := range arrP {
 		//空棋子
 		if arr[i] == 0 {
@@ -69,18 +75,23 @@ func rowWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c ch
 		}
 	}
 	//排序
-	winArr, winFlag := sort(colArr, winCount)
-	if winFlag {
-		//赢了就输出
+	winColArr, winFlag := sort(colArr, winCount)
+
+	if winFlag && winColArr != nil {
 		c.signalChan <- winFlag
+		rowNum := pos[0]
+		winArr := make([][2]int, len(winColArr))
+		for i, v := range winColArr {
+			winArr[i] = [2]int{rowNum, v}
+		}
 		c.winArrChan <- winArr
 		return
 	}
 	c.signalChan <- winFlag
 }
 
-func rcLeft(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c channel) {
-	var leftArr []int
+func rcLeft(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c *channel) {
+	leftArr := make([]int, 0, len(arrP))
 	for i, v := range arrP {
 		//空棋子
 		if arr[i] == 0 {
@@ -93,19 +104,24 @@ func rcLeft(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c ch
 		}
 	}
 	//排序
-	winArr, winFlag := sort(leftArr, winCount)
-	if winFlag {
+	winRowArr, winFlag := sort(leftArr, winCount)
+	if winFlag && winRowArr != nil {
 		c.signalChan <- winFlag
+		winArr := make([][2]int, len(winRowArr))
+		for i, v := range winRowArr {
+			colNum := pos[1] - pos[0] + v
+			winArr[i] = [2]int{v, colNum}
+		}
 		c.winArrChan <- winArr
 		return
 	}
 	c.signalChan <- winFlag
 }
-func rcRight(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c channel) {
-	var rightArr []int
+func rcRight(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c *channel) {
+	rightArr := make([]int, 0, len(arrP))
 	for i, v := range arrP {
 		//空棋子
-		if arr[i] == 0 {
+		if arr[i] == '0' {
 			continue
 		}
 		//右对角线相同和元素相同
@@ -115,9 +131,14 @@ func rcRight(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c c
 		}
 	}
 	//排序
-	winArr, winFlag := sort(rightArr, winCount)
-	if winFlag {
+	winRowArr, winFlag := sort(rightArr, winCount)
+	if winFlag && winRowArr != nil {
 		c.signalChan <- winFlag
+		winArr := make([][2]int, len(winRowArr))
+		for i, v := range winRowArr {
+			colNum := pos[1] + pos[0] - v
+			winArr[i] = [2]int{v, colNum}
+		}
 		c.winArrChan <- winArr
 		return
 	}

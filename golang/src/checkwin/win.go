@@ -36,7 +36,7 @@ func colWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c *c
 	rowArr := make([]int, 0, len(arrP))
 	for i, v := range arrP {
 		//空棋子
-		if arr[i] == 0 {
+		if arr[i] == '0' {
 			continue
 		}
 		//列数相同和元素相同
@@ -65,7 +65,7 @@ func rowWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c *c
 	colArr := make([]int, 0, len(arrP))
 	for i, v := range arrP {
 		//空棋子
-		if arr[i] == 0 {
+		if arr[i] == '0' {
 			continue
 		}
 		//行数相同和元素相同
@@ -94,7 +94,7 @@ func rcLeft(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c *c
 	leftArr := make([]int, 0, len(arrP))
 	for i, v := range arrP {
 		//空棋子
-		if arr[i] == 0 {
+		if arr[i] == '0' {
 			continue
 		}
 		//对角线相同和元素相同

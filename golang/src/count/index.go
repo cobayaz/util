@@ -5,20 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math"
 	"os"
 )
-
-func interfaceFormat(v interface{}) (int, string) {
-	var vInt int
-	var str string
-	switch val := v.(type) {
-	case float64:
-		vInt = int(val)
-	case string:
-		str = val
-	}
-	return vInt, str
-}
 
 func makeArrP(size int) [][2]int {
 	arr := make([][2]int, size*size)
@@ -32,21 +21,32 @@ func makeArrP(size int) [][2]int {
 	return arr
 }
 
+type jsondata struct {
+	Arr       []string `json:"arr"`
+	WinCount  int      `json:"win_count"`
+	CheckSize float64  `json:"check_size"`
+	Index     int      `json:"index"`
+}
+
 func main() {
-	data := make(map[string]interface{})
+	data := jsondata{}
 	dataInput := os.Args[1]
 	err := json.Unmarshal([]byte(dataInput), &data)
 	if err != nil {
 		log.Fatal(err)
 	}
 	//整合数据
-	index, _ := interfaceFormat(data["index"])
-	winCount, _ := interfaceFormat(data["winCount"])
-	checkSize, _ := interfaceFormat(data["checkSize"])
-	_, arrString := interfaceFormat(data["arr"])
+	index := data.Index
+	winCount := data.WinCount
+	checkSize := int(math.Sqrt(data.CheckSize))
+	arr := data.Arr
 	arrP := makeArrP(checkSize)
-	arr := []byte(arrString)
-	fmt.Print(index, winCount, arrP, arr)
+
 	winner := checkwin.IfWin(arr, arrP, index, winCount)
-	fmt.Print(winner)
+
+	if winner != nil {
+		fmt.Print(winner)
+	} else {
+		os.Stderr.WriteString("false")
+	}
 }

@@ -32,11 +32,11 @@ func sort(arr []int, winCount int) ([]int, bool) {
 	return nil, false
 }
 
-func colWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c *channel) {
+func colWin(arr []string, arrP [][2]int, index int, pos [2]int, winCount int, c *channel) {
 	rowArr := make([]int, 0, len(arrP))
 	for i, v := range arrP {
 		//空棋子
-		if arr[i] == '0' {
+		if arr[i] == "" {
 			continue
 		}
 		//列数相同和元素相同
@@ -61,11 +61,11 @@ func colWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c *c
 	c.signalChan <- winFlag
 }
 
-func rowWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c *channel) {
+func rowWin(arr []string, arrP [][2]int, index int, pos [2]int, winCount int, c *channel) {
 	colArr := make([]int, 0, len(arrP))
 	for i, v := range arrP {
 		//空棋子
-		if arr[i] == '0' {
+		if arr[i] == "" {
 			continue
 		}
 		//行数相同和元素相同
@@ -90,11 +90,11 @@ func rowWin(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c *c
 	c.signalChan <- winFlag
 }
 
-func rcLeft(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c *channel) {
+func rcLeft(arr []string, arrP [][2]int, index int, pos [2]int, winCount int, c *channel) {
 	leftArr := make([]int, 0, len(arrP))
 	for i, v := range arrP {
 		//空棋子
-		if arr[i] == '0' {
+		if arr[i] == "" {
 			continue
 		}
 		//对角线相同和元素相同
@@ -117,11 +117,11 @@ func rcLeft(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c *c
 	}
 	c.signalChan <- winFlag
 }
-func rcRight(arr []byte, arrP [][2]int, index int, pos [2]int, winCount int, c *channel) {
+func rcRight(arr []string, arrP [][2]int, index int, pos [2]int, winCount int, c *channel) {
 	rightArr := make([]int, 0, len(arrP))
 	for i, v := range arrP {
 		//空棋子
-		if arr[i] == '0' {
+		if arr[i] == "" {
 			continue
 		}
 		//右对角线相同和元素相同

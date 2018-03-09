@@ -1,9 +1,5 @@
 package checkwin
 
-import (
-	"fmt"
-)
-
 //规定传入的参数的格式
 //比如:
 //一个json文件
@@ -18,7 +14,7 @@ import (
 //winCount 输赢数目 unit16 0-2^16
 
 //IfWin function checkout whether the keyboard win or not
-func IfWin(arr []byte, intArr [][2]int, index, winCount int) [][2]int {
+func IfWin(arr []string, intArr [][2]int, index, winCount int) [][2]int {
 	c := &channel{
 		4,
 		make(chan bool),
@@ -39,7 +35,6 @@ func IfWin(arr []byte, intArr [][2]int, index, winCount int) [][2]int {
 
 	for i := 0; i < c.count; i++ {
 		sign := <-c.signalChan
-		fmt.Print(sign)
 		if sign {
 			winArr := <-c.winArrChan
 			return winArr

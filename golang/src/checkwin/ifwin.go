@@ -20,14 +20,6 @@ func IfWin(arr []string, intArr [][2]int, index, winCount int) [][2]int {
 		make(chan bool),
 		make(chan [][2]int),
 	}
-	// arr := []byte{'x', 'o', 'x', 0, 'o', 0, 'x', 'o', 'x'}
-	// var intArr [][2]int
-	// for i := range make([]byte, 3) {
-	// 	for j := range make([]byte, 3) {
-	// 		tmp := [2]int{i, j}
-	// 		intArr = append(intArr, tmp)
-	// 	}
-	// }
 	go colWin(arr, intArr, index, intArr[index], winCount, c)
 	go rowWin(arr, intArr, index, intArr[index], winCount, c)
 	go rcLeft(arr, intArr, index, intArr[index], winCount, c)

@@ -3,7 +3,6 @@ package main
 import (
 	"checkwin"
 	"encoding/json"
-	"fmt"
 	"log"
 	"math"
 	"os"
@@ -45,7 +44,11 @@ func main() {
 	winner := checkwin.IfWin(arr, arrP, index, winCount)
 
 	if winner != nil {
-		fmt.Print(winner)
+		arrstring, err := json.Marshal(winner)
+		if err != nil {
+			os.Stderr.WriteString(err.Error())
+		}
+		os.Stdout.Write(arrstring)
 	} else {
 		os.Stderr.WriteString("false")
 	}

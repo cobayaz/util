@@ -1,0 +1,9 @@
+{
+  "name": "mongo_readdir",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "mongoose": "^5.0.10"
+  }
+}

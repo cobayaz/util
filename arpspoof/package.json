@@ -1,0 +1,12 @@
+{
+    "name": "arpspoof.js",
+    "version": "1.0.0",
+    "description": "use arpspoof in kali with node",
+    "main": "index.js",
+    "repository": "git@github.com:swnb/arpspoof.js.git",
+    "author": "swnb <1786718956@qq.com>",
+    "license": "MIT",
+    "scripts": {
+        "start": "node index.js"
+    }
+}

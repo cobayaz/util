@@ -9,6 +9,12 @@ const isSameBaseType = (a, b) => {
     }
 };
 
+const isObject = param => {
+    return param && typeof param === "object" && !Array.isArray(param)
+        ? true
+        : false;
+};
+
 class DataStore {
     constructor(obj = {}) {
         this.data = new Map();
@@ -69,15 +75,6 @@ class DataStore {
         console.log(this.data);
         return this;
     }
-    timeout(fn, time) {
-        const cb = res => {
-            fn(this);
-            res();
-        };
-        return new Promise((res, rej) => {
-            setTimeout(cb.bind(this, res), time);
-        }).catch(console.error);
-    }
     static getInstance(id = "boss") {
         if (DataStore.instance) {
             return DataStore.instance;
@@ -111,7 +108,6 @@ data
         console.log(val);
         return val + "xsxs" + "xsxs";
     })
-    .setData()
     .print("key");
 
 data
@@ -120,4 +116,5 @@ data
         console.log(val);
         return val + "xcd" + "cd";
     })
-    .print("key");
+    .print("key")
+    .getVal("key");

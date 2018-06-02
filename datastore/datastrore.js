@@ -15,7 +15,7 @@ const isObject = param => {
         : false;
 };
 
-class DataStore {
+export default class DataStore {
     constructor(obj = {}) {
         this.data = new Map();
         for (const attr in obj) {

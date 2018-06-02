@@ -1,3 +1,14 @@
+const isSameBaseType = (a, b) => {
+    switch (typeof a) {
+        case "string":
+            return typeof b === "string" ? true : false;
+        case "boolean":
+            return typeof b === "boolean" ? true : false;
+        case "number":
+            return typeof b === "number" ? true : false;
+    }
+};
+
 class DataStore {
     constructor(obj = {}) {
         this.data = new Map();
@@ -21,10 +32,15 @@ class DataStore {
         const val = this.data.get(key);
         const solve = fn => {
             const newData = fn(val);
-            isSameBaseType(newData, val) ? this.data.set(key, newData) : void 0;
-            if (isObject(newData)) {
-            } else {
-            }
+            isSameBaseType(newData, val)
+                ? this.data.set(key, newData)
+                : isObject(newData)
+                    ? (() => {
+                          for (const attr in newData) {
+                              this.data.set(attr, newData[attr]);
+                          }
+                      })()
+                    : void 0;
             return this;
         };
         solve.solve = solve; //取 改 写
@@ -53,8 +69,15 @@ class DataStore {
         console.log(this.data);
         return this;
     }
-    async() {}
-    timeout(key, time) {}
+    timeout(fn, time) {
+        const cb = res => {
+            fn(this);
+            res();
+        };
+        return new Promise((res, rej) => {
+            setTimeout(cb.bind(this, res), time);
+        }).catch(console.error);
+    }
     static getInstance(id = "boss") {
         if (DataStore.instance) {
             return DataStore.instance;

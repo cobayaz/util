@@ -1,9 +1,3 @@
-const isObject = param => {
-    return param && typeof param === "object" && !Array.isArray(param)
-        ? true
-        : false;
-};
-
 class DataStore {
     constructor(obj = {}) {
         this.data = new Map();
@@ -27,8 +21,9 @@ class DataStore {
         const val = this.data.get(key);
         const solve = fn => {
             const newData = fn(val);
-            if (newData) {
-                this.data.set(key, newData);
+            isSameBaseType(newData, val) ? this.data.set(key, newData) : void 0;
+            if (isObject(newData)) {
+            } else {
             }
             return this;
         };

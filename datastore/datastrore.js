@@ -35,18 +35,6 @@ class DataStore {
         solve.solve = solve; //取 改 写
         return solve;
     }
-    setData(objOrFn) {
-        if (objOrFn) {
-            if (typeof objOrFn === "function") {
-                const fn = objOrFn;
-                fn(this.data);
-            } else if (typeof objOrFn === "object" && !Array.isArray(objOrFn)) {
-                const newData = objOrFn;
-            }
-        } else {
-            throw Error("not a argument");
-        }
-    }
     getVal(key) {
         return this.data.get(key);
     }

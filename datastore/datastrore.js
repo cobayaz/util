@@ -39,16 +39,12 @@ class DataStore {
         if (objOrFn) {
             if (typeof objOrFn === "function") {
                 const fn = objOrFn;
-            } else {
+                fn(this.data);
+            } else if (typeof objOrFn === "object" && !Array.isArray(objOrFn)) {
                 const newData = objOrFn;
             }
         } else {
             throw Error("not a argument");
-        }
-        if (isObject(newData)) {
-            for (const attr in newData) {
-                this.data.set(attr, newData[attr]);
-            }
         }
     }
     getVal(key) {

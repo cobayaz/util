@@ -79,11 +79,19 @@ export default class DataStore {
         console.log(this.data);
         return this;
     }
-    static getInstance(id = "boss") {
+    static getInstance(id = "main") {
         if (DataStore.instance) {
-            return DataStore.instance;
+            if (DataStore.instance[id]) {
+                return DataStore.instance[id];
+            } else {
+                DataStore.instance[id] = DataStore.create();
+                return DataStore.instance[id];
+            }
+        } else {
+            DataStore.instance = Object.create(null);
+            DataStore.instance[id] = DataStore.create();
+            return DataStore.instance[id];
         }
-        return (DataStore.instance = DataStore.create());
     }
     static create(arg) {
         return new DataStore(arg);

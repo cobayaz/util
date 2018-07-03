@@ -21,6 +21,7 @@ func (c *CryptoSimple) Decrypt(code []byte) string {
 	return decryp(code)
 }
 
+// 加密的代码
 func encryp(plaintext string) []byte {
 	c, err := aes.NewCipher([]byte(key))
 	if err != nil {
@@ -32,6 +33,7 @@ func encryp(plaintext string) []byte {
 	return ciphertext
 }
 
+// 解密的代码
 func decryp(ciphertext []byte) string {
 	c, err := aes.NewCipher([]byte(key))
 	if err != nil {

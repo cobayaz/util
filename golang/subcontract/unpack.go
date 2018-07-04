@@ -1,7 +1,6 @@
 package subcontract
 
 import (
-	"bufio"
 	"fmt"
 	"io"
 	"os"
@@ -18,7 +17,6 @@ func Unpack(filePath string) {
 	// 打开文件
 	file, err := os.OpenFile(filePath, os.O_RDONLY, 0600)
 	check(err)
-	fileReader := bufio.NewReader(file)
 
 	// 通讯的channel
 	channel := make(chan []byte)
@@ -29,7 +27,7 @@ func Unpack(filePath string) {
 		var count int
 		for {
 			pack_chunk := make([]byte, 512*1024*1024)
-			n, err := fileReader.Read(pack_chunk)
+			n, err := file.Read(pack_chunk)
 			if err != nil {
 				if err == io.EOF {
 					fmt.Println(err)
@@ -54,8 +52,12 @@ func Unpack(filePath string) {
 			file, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0600)
 			check(err)
 			n, err := file.Write(chunk)
+			if n != len(chunk) {
+				fmt.Println(n, " is not equal to ", len(chunk))
+			}
 			check(err)
 			fmt.Println("write ", n, " at file ", count, " over")
+			file.Close()
 		}
 		endChannel <- true
 	}(channel, end)

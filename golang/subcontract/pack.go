@@ -49,7 +49,7 @@ func Pack(filePath string) {
 	recieve(channle)
 }
 
-//walk each file to  send package
+// walk each file to  send package
 func Walk(filePath string, c chan []byte) {
 	for _, pathStruct := range getFilePathList(filePath) {
 		path := pathStruct.filePath
@@ -77,7 +77,7 @@ func Walk(filePath string, c chan []byte) {
 	close(c)
 }
 
-//sort filepath by name
+// sort filepath by name
 func getFilePathList(dirPath string) filePathList {
 	var pathList filePathList = make(filePathList, 0, 10)
 	err := filepath.Walk(dirPath, func(path string, info os.FileInfo, err error) error {

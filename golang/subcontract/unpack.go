@@ -13,6 +13,7 @@ func check(err error) {
 	}
 }
 
+// Unpack use to 解包
 func Unpack(filePath string) {
 	// 打开文件
 	file, err := os.OpenFile(filePath, os.O_RDONLY, 0600)
@@ -26,8 +27,8 @@ func Unpack(filePath string) {
 	go func(c chan []byte) {
 		var count int
 		for {
-			pack_chunk := make([]byte, 512*1024*1024)
-			n, err := file.Read(pack_chunk)
+			packChunk := make([]byte, 512*1024*1024)
+			n, err := file.Read(packChunk)
 			if err != nil {
 				if err == io.EOF {
 					fmt.Println(err)
@@ -39,7 +40,7 @@ func Unpack(filePath string) {
 			}
 			count++
 			fmt.Println(n, " read number ", count, " send to ", "pack")
-			c <- pack_chunk[:n]
+			c <- packChunk[:n]
 		}
 	}(channel)
 

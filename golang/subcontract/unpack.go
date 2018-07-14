@@ -7,12 +7,6 @@ import (
 	"strconv"
 )
 
-func check(err error) {
-	if err != nil {
-		panic(err)
-	}
-}
-
 // Unpack use to 解包
 func Unpack(filePath string) {
 	// 打开文件

@@ -2,6 +2,10 @@ import Draw from "./draw";
 
 import Obj from "./object";
 
+import { createObj } from "./object";
+
+import util from "./util";
+
 type Pos = [number, number];
 
 interface ObjType {
@@ -14,12 +18,12 @@ class Cut extends Draw {
         return new Cut(context);
     }
 
-    private allObj = [];
+    private allObj: Array<Obj> = [];
 
     public context: CanvasRenderingContext2D;
 
     constructor(context: CanvasRenderingContext2D) {
-        super();
+        super(context);
         this.context = context;
         this.context.strokeStyle = "whitesmoke";
         this.context.fillStyle = "pink";
@@ -37,11 +41,21 @@ class Cut extends Draw {
             type: "Parallelogram",
             typecode: 1
         };
-        const obj = Obj(this.context, type, startPos, 200).draw();
+        const obj = createObj(this.context, type, startPos, 200).draw();
         this.allObj.push(obj);
     }
-    onclick(x, y) {
-        // this.allObj.reverse().find(ele => {});
+    onclick(x: number, y: number) {
+        console.log("cdcdccddcfvffbd", x, y);
+        this.allObj.reverse().find(
+            (obj: Obj): boolean => {
+                const rotatePos: [number, number, number] = obj.rotatePos;
+                const directPos: [number, number, number] = obj.directPos;
+                return (
+                    util.isInsideObj(x, y, rotatePos) ||
+                    util.isInsideObj(x, y, directPos)
+                );
+            }
+        );
     }
 
     loop() {
@@ -50,6 +64,6 @@ class Cut extends Draw {
     }
 }
 
-export default context => {
+export default (context: CanvasRenderingContext2D) => {
     Cut.create(context).draw();
 };

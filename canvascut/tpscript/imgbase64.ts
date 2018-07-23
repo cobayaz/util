@@ -24,7 +24,7 @@ for (const key in map) {
     };
 }
 
-export function getImg(key): HTMLImageElement {
+export function getImg(key: string): HTMLImageElement {
     return Imgs[key];
 }
 

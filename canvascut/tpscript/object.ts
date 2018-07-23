@@ -7,16 +7,14 @@ import { Objs } from "./elementpos";
 type Pos = [number, number];
 
 class ControObj extends Draw {
-    public context: CanvasRenderingContext2D;
-
     public x: number;
     public y: number;
 
     public width: number;
     public height: number;
 
-    public directPos: [number, number, number];
-    public rotatePos: [number, number, number];
+    public directPos: [number, number, number] = [0, 0, 0];
+    public rotatePos: [number, number, number] = [0, 0, 0];
 
     // 修正参数
     private prefix = 30;
@@ -25,11 +23,10 @@ class ControObj extends Draw {
     constructor(
         context: CanvasRenderingContext2D,
         startP: Pos,
-        width,
+        width: number,
         height: number = width
     ) {
-        super();
-        this.context = context;
+        super(context);
         this.x = startP[0];
         this.y = startP[1];
         this.width = width;
@@ -76,7 +73,13 @@ interface ObjType {
 
 class Obj extends ControObj {
     private objType: ObjType;
-    constructor(context, objType, startP, width, height = width) {
+    constructor(
+        context: CanvasRenderingContext2D,
+        objType: ObjType,
+        startP: Pos,
+        width: number,
+        height: number = width
+    ) {
         super(context, startP, width, height);
         this.objType = objType;
     }
@@ -101,11 +104,13 @@ class Obj extends ControObj {
     }
 }
 
-export default function(
+export default Obj;
+
+export function createObj(
     context: CanvasRenderingContext2D,
     objType: ObjType,
     startP: Pos,
-    width,
+    width: number,
     height: number = width
 ) {
     return new Obj(context, objType, startP, width, (height = width));

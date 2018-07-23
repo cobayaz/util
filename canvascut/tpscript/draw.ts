@@ -1,11 +1,15 @@
+// 位置点阵
 type Pos = [number, number];
 
-export default class Draw {
+export default abstract class Draw {
     public x: number;
     public y: number;
 
+    public width: number;
+    public height: number;
+
     public context: CanvasRenderingContext2D;
-    constructor(context: CanvasRenderingContext2D) {}
+    constructor() {}
 
     public rect(x, y, w, h: number = w, stroke?: boolean) {
         this.context.beginPath();

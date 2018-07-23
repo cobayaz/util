@@ -28,7 +28,8 @@ class ControObj extends Draw {
         width,
         height: number = width
     ) {
-        super(context);
+        super();
+        this.context = context;
         this.x = startP[0];
         this.y = startP[1];
         this.width = width;

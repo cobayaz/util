@@ -1,5 +1,7 @@
 import { getIntersection } from "./getIntersection";
 
+type Pos = [number, number];
+
 export default {
     // 是否在元素的里面
     isInsideObj: (
@@ -81,5 +83,7 @@ export default {
     },
 
     // 得到交点
-    getIntersection
+    getIntersection,
+
+    getDirection(startPos: Pos, endPos: Pos) {}
 };

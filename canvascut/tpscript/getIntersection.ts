@@ -31,15 +31,31 @@ export const getIntersection = (
     const x = (bb - ab) / (ak - bk);
     const y = ak * x + ab;
 
-    // 点在直线上
-    const pointAtLineA = Math.abs(ak * x + ab - y) < Number.EPSILON;
-    const pointAtLineB = Math.abs(bk * x + bb - y) < Number.EPSILON;
-
-    if (pointAtLineA && pointAtLineB) {
+    if (pointAtLine([x, y], la1, la2) && pointAtLine([x, y], lb1, lb2)) {
         console.log(x, y);
+        result.res = true;
         result.point = [x, y];
         return result;
     } else {
         return result;
     }
+};
+
+const pointAtLine = (point: Pos, startPoint: Pos, endPoint: Pos): boolean => {
+    const startToPoint = Math.sqrt(
+        Math.pow(point[0] - startPoint[0], 2) +
+            Math.pow(point[1] - startPoint[1], 2)
+    );
+    const endToPoint = Math.sqrt(
+        Math.pow(point[0] - endPoint[0], 2) +
+            Math.pow(point[1] - endPoint[1], 2)
+    );
+    const startToEnd = Math.sqrt(
+        Math.pow(startPoint[0] - endPoint[0], 2) +
+            Math.pow(startPoint[1] - endPoint[1], 2)
+    );
+
+    console.log(Math.abs(startToEnd - endToPoint - startToPoint));
+
+    return Math.abs(startToEnd - endToPoint - startToPoint) < 6 ? true : false;
 };

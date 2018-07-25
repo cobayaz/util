@@ -1,4 +1,3 @@
-import { getIntersection } from "./getIntersection";
 import Draw from "./draw";
 
 import Obj from "./object";
@@ -6,6 +5,8 @@ import Obj from "./object";
 import { createObj } from "./object";
 
 import util from "./util";
+
+import slice from "./slice";
 
 type Pos = [number, number];
 
@@ -170,6 +171,7 @@ class Cut extends Draw {
         let timeRecord = Date.now();
         return (ev: MouseEvent) => {
             console.log("start slice");
+
             // 实现去抖动的功能
             const now = Date.now();
             const divi = now - timeRecord;
@@ -203,24 +205,46 @@ class Cut extends Draw {
     }
     // 判断是否存在一个线段和它相交
     getInsertPoints(lineA1: Pos, LineA2: Pos) {
-        this.allObj.forEach(obj => {
-            // 聚合 生成一个一个的点阵
-            obj.polygonPoints
-                .reduce(
-                    (
-                        previousEles: Array<[Pos, Pos]>,
-                        ele: Pos,
-                        index: number,
-                        array: Array<Pos>
-                    ): Array<[Pos, Pos]> => {
-                        if ((1 + index) % 2 == 0) {
-                            previousEles.push([array[index - 1], ele]);
-                        }
-                        return previousEles;
-                    },
-                    [] as Array<[Pos, Pos]>
-                )
-                .forEach((ele: Array<Pos>) => {});
+        // this.allObj.forEach(obj => {
+        //     // 聚合 生成一个一个的点阵
+        //     obj.polygonPoints
+        //         .reduce(
+        //             (
+        //                 previousEles: Array<[Pos, Pos]>,
+        //                 ele: Pos,
+        //                 index: number,
+        //                 array: Array<Pos>
+        //             ): Array<[Pos, Pos]> => {
+        //                 if (index !== 0) {
+        //                     previousEles.push([array[index - 1], ele]);
+        //                 }
+        //                 return previousEles;
+        //             },
+        //             [] as Array<[Pos, Pos]>
+        //         )
+        //         .map((ele: Array<Pos>) => {
+        //             const result = util.getIntersection(
+        //                 lineA1,
+        //                 LineA2,
+        //                 ele[0],
+        //                 ele[1]
+        //             );
+        //             if (result.res) {
+        //                 return result.point;
+        //             }
+        //             return null;
+        //         })
+        //         .filter(ele => ele)
+        //         .forEach((ele: Pos | undefined | null) => {
+        //             ele = ele as Pos;
+        //         });
+        // });
+
+        const piecesOfArray = slice(this.allObj, lineA1, LineA2);
+        piecesOfArray.forEach(element => {
+            element.forEach(ele => {
+                this.polygonFill(ele);
+            });
         });
     }
     loop() {

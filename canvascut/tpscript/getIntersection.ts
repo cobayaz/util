@@ -20,7 +20,7 @@ export const getIntersection = (
     const bk = (lb2[1] - lb1[1]) / (lb2[0] - lb1[0]);
 
     // 加速他的计算，避免损耗
-    if (ak == bk) return result;
+    if (Math.abs(ak - bk) < Number.EPSILON) return result;
 
     const ab = (la1[0] * la2[1] - la2[0] * la1[1]) / (la1[0] - la2[0]);
     const bb = (lb1[0] * lb2[1] - lb2[0] * lb1[1]) / (lb1[0] - lb2[0]);
@@ -32,8 +32,9 @@ export const getIntersection = (
     const y = ak * x + ab;
 
     // 点在直线上
-    const pointAtLineA = y == ak * x + ab;
-    const pointAtLineB = y == bk * x + bb;
+    const pointAtLineA = Math.abs(ak * x + ab - y) < Number.EPSILON;
+    const pointAtLineB = Math.abs(bk * x + bb - y) < Number.EPSILON;
+
     if (pointAtLineA && pointAtLineB) {
         console.log(x, y);
         result.point = [x, y];

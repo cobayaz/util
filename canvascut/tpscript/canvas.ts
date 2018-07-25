@@ -1,3 +1,4 @@
+import { getIntersection } from "./getIntersection";
 import Draw from "./draw";
 
 import Obj from "./object";
@@ -198,6 +199,29 @@ class Cut extends Draw {
         this.context.lineTo(ex, ey);
         this.context.stroke();
         this.context.closePath();
+        this.getInsertPoints([x, y], [ex, ey]);
+    }
+    // 判断是否存在一个线段和它相交
+    getInsertPoints(lineA1: Pos, LineA2: Pos) {
+        this.allObj.forEach(obj => {
+            // 聚合 生成一个一个的点阵
+            obj.polygonPoints
+                .reduce(
+                    (
+                        previousEles: Array<[Pos, Pos]>,
+                        ele: Pos,
+                        index: number,
+                        array: Array<Pos>
+                    ): Array<[Pos, Pos]> => {
+                        if ((1 + index) % 2 == 0) {
+                            previousEles.push([array[index - 1], ele]);
+                        }
+                        return previousEles;
+                    },
+                    [] as Array<[Pos, Pos]>
+                )
+                .forEach((ele: Array<Pos>) => {});
+        });
     }
     loop() {
         this.draw();

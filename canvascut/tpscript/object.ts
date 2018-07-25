@@ -75,6 +75,10 @@ interface ObjType {
 
 class Obj extends ControObj {
     private objType: ObjType;
+
+    // 点阵的信息，用于对于，只能生成一次
+    public polygonPoints: Array<Pos> = [];
+
     constructor(
         context: CanvasRenderingContext2D,
         objType: ObjType,
@@ -93,16 +97,16 @@ class Obj extends ControObj {
         switch (this.objType.type) {
             case "Parallelogram":
                 this.context.fillStyle = "white";
-                this.polygonFill(
-                    Objs.Parallelogram(
-                        this.x,
-                        this.y,
-                        this.objType.typecode,
-                        this.width
-                    )
+                this.polygonPoints = Objs.Parallelogram(
+                    this.x,
+                    this.y,
+                    this.objType.typecode,
+                    this.width
                 );
+                this.polygonFill(this.polygonPoints);
         }
 
+        // 画出中心的一个矩形，待删除
         this.rect(
             this.x + this.width / 2,
             this.y + this.height / 2,
@@ -110,6 +114,7 @@ class Obj extends ControObj {
             20,
             false
         );
+
         this.context.closePath();
         this.context.stroke();
         return this;

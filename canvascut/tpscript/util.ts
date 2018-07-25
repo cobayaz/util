@@ -1,6 +1,7 @@
 import { getIntersection } from "./getIntersection";
 
 export default {
+    // 是否在元素的里面
     isInsideObj: (
         x: number,
         y: number,
@@ -58,6 +59,7 @@ export default {
         console.log(radina);
         return radina;
     },
+    // 得到角度
     getDeg(
         centerX: number,
         centerY: number,
@@ -77,5 +79,7 @@ export default {
 
         return parseFloat(Math.acos(multiplicate).toFixed(3));
     },
+
+    // 得到交点
     getIntersection
 };

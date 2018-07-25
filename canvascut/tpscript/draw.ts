@@ -12,6 +12,8 @@ export default abstract class Draw {
     constructor(context: CanvasRenderingContext2D) {
         this.context = context;
     }
+    
+    private fillStyle = "pink";
 
     public rect(
         x: number,
@@ -40,7 +42,7 @@ export default abstract class Draw {
                     : this.context.lineTo(posx, posy)
         );
         this.context.closePath();
-        this.context.fill();
+        this.context.stroke();
     }
     public polygonFill(pos: Array<Pos>) {
         this.context.beginPath();
@@ -52,6 +54,8 @@ export default abstract class Draw {
         );
         this.context.closePath();
         this.context.fill();
+        this.context.strokeStyle = "#33CCFF";
+        this.context.stroke();
     }
     public rotate(deg: number) {
         this.context.save();
@@ -59,8 +63,12 @@ export default abstract class Draw {
             this.x + this.width / 2,
             this.y + this.height / 2
         );
+
         this.context.rotate(deg);
-        this.context.restore();
+        this.context.translate(
+            -this.x - this.width / 2,
+            -this.y - this.height / 2
+        );
     }
     public drawImg(
         Image: HTMLImageElement,
@@ -70,5 +78,16 @@ export default abstract class Draw {
         dHeight: number = dWidth
     ) {
         this.context.drawImage(Image, dX, dY, dWidth, dHeight);
+    }
+    public clear() {
+        this.context.clearRect(0, 0, 1280, 800);
+    }
+    public drawBg() {
+        const prefillStyle = this.context.fillStyle;
+        this.context.fillStyle = this.fillStyle;
+        this.context.beginPath();
+        this.context.fillRect(0, 0, 1280, 800);
+        this.context.closePath();
+        this.context.fillStyle = prefillStyle;
     }
 }

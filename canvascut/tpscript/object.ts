@@ -13,6 +13,8 @@ class ControObj extends Draw {
     public width: number;
     public height: number;
 
+    public mode: "rotate" | "move" | "clip" | "static" = "static";
+
     public directPos: [number, number, number] = [0, 0, 0];
     public rotatePos: [number, number, number] = [0, 0, 0];
 
@@ -39,21 +41,21 @@ class ControObj extends Draw {
         const directImg = getImg("direct");
         this.drawImg(
             directImg,
-            x - this.iconWidth / 2,
+            x + this.iconWidth / 2,
             y - this.iconWidth / 2,
             this.iconWidth
         );
-        return [x, y, this.iconWidth / 2];
+        return [x + this.iconWidth, y, this.iconWidth / 2];
     }
     // 旋转的标签
     drawRotateObj(): [number, number, number] {
         const rotateImg = getImg("rotate");
-        const x = this.x + this.width + 30;
-        console.log(this.width, this.x);
-        const y = this.y - 30;
+        // const x = this.x + this.width + this.prefix;
+        const x = this.x + this.width / 2;
+        const y = this.y - this.prefix;
         this.drawImg(
             rotateImg,
-            x + this.iconWidth / 2,
+            x - this.iconWidth / 2,
             y - this.iconWidth / 2,
             this.iconWidth
         );
@@ -86,6 +88,8 @@ class Obj extends ControObj {
     draw() {
         // 生成icon
         this.drawIcon();
+
+        //画图形
         switch (this.objType.type) {
             case "Parallelogram":
                 this.context.fillStyle = "white";
@@ -98,6 +102,14 @@ class Obj extends ControObj {
                     )
                 );
         }
+
+        this.rect(
+            this.x + this.width / 2,
+            this.y + this.height / 2,
+            20,
+            20,
+            false
+        );
         this.context.closePath();
         this.context.stroke();
         return this;

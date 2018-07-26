@@ -160,7 +160,7 @@ class Cut extends Draw {
             ele.draw();
             ele.context.restore();
 
-            [startX, startY] = [ev.offsetX, ev.offsetY];
+            // [startX, startY] = [ev.offsetX, ev.offsetY];
         };
     };
     listenerClip = (x: number, y: number) => {
@@ -180,6 +180,7 @@ class Cut extends Draw {
             } else {
                 timeRecord = now;
             }
+
             this.clear();
             this.drawBg();
             this.draw();
@@ -205,45 +206,20 @@ class Cut extends Draw {
     }
     // 判断是否存在一个线段和它相交
     getInsertPoints(lineA1: Pos, LineA2: Pos) {
-        // this.allObj.forEach(obj => {
-        //     // 聚合 生成一个一个的点阵
-        //     obj.polygonPoints
-        //         .reduce(
-        //             (
-        //                 previousEles: Array<[Pos, Pos]>,
-        //                 ele: Pos,
-        //                 index: number,
-        //                 array: Array<Pos>
-        //             ): Array<[Pos, Pos]> => {
-        //                 if (index !== 0) {
-        //                     previousEles.push([array[index - 1], ele]);
-        //                 }
-        //                 return previousEles;
-        //             },
-        //             [] as Array<[Pos, Pos]>
-        //         )
-        //         .map((ele: Array<Pos>) => {
-        //             const result = util.getIntersection(
-        //                 lineA1,
-        //                 LineA2,
-        //                 ele[0],
-        //                 ele[1]
-        //             );
-        //             if (result.res) {
-        //                 return result.point;
-        //             }
-        //             return null;
-        //         })
-        //         .filter(ele => ele)
-        //         .forEach((ele: Pos | undefined | null) => {
-        //             ele = ele as Pos;
-        //         });
-        // });
-
-        const piecesOfArray = slice(this.allObj, lineA1, LineA2);
-        piecesOfArray.forEach(element => {
+        slice(this.allObj, lineA1, LineA2).forEach(element => {
             element.forEach(ele => {
+                const dir = ele.pop() as [number, number];
                 this.polygonFill(ele);
+                setTimeout(() => {
+                    this.polygonFill(
+                        ele.map(
+                            (pos: [number, number]): [number, number] => [
+                                pos[0] + dir[0],
+                                pos[1] + dir[1]
+                            ]
+                        )
+                    );
+                }, 100);
             });
         });
     }

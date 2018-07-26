@@ -85,5 +85,37 @@ export default {
     // 得到交点
     getIntersection,
 
-    getDirection(startPos: Pos, endPos: Pos) {}
+    getDirection(startPos: Pos, endPos: Pos) {
+        const [sx, sy] = startPos;
+        const [ex, ey] = endPos;
+
+        const k = parseFloat(((ey - sy) / (ex - sx)).toFixed(3));
+
+        const slope = parseFloat((-1 / k).toFixed(3));
+
+        const line = [1, k];
+
+        const reciprocal = [1, slope];
+
+        if (1 - k * slope > 0) {
+            console.log("right");
+            const res: {
+                direct: string;
+                direPoint: [number, number];
+            } = {
+                direct: "right",
+                direPoint: [10, 10 * slope]
+            };
+            return res;
+        } else {
+            const res: {
+                direct: string;
+                direPoint: [number, number];
+            } = {
+                direct: "left",
+                direPoint: [10, 10 * slope]
+            };
+            return res;
+        }
+    }
 };

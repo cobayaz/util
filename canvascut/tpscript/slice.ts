@@ -16,9 +16,10 @@ export default (allObj: Obj[], lineA1: Pos, LineA2: Pos): Array<Pos[][]> =>
                     array: Array<Pos>
                 ): Array<[Pos, Pos]> => {
                     if (index == array.length - 1) {
-                        console.log("last");
                         previousEles.push([ele, array[0]]);
-                    } else previousEles.push([ele, array[index + 1]]);
+                    } else {
+                        previousEles.push([ele, array[index + 1]]);
+                    }
 
                     return previousEles;
                 },
@@ -84,10 +85,7 @@ export default (allObj: Obj[], lineA1: Pos, LineA2: Pos): Array<Pos[][]> =>
                             );
                             pieceOfArray.push(array[1].pos);
 
-                            // getDirection();
-
                             // 确定偏移的方向
-                            // const direction: Pos = [];
 
                             return pieceOfArray;
                         }
@@ -107,6 +105,7 @@ export default (allObj: Obj[], lineA1: Pos, LineA2: Pos): Array<Pos[][]> =>
                                     obj.polygonPoints.length
                                 )
                             );
+
                             return pieceOfArray;
                         }
                         default:

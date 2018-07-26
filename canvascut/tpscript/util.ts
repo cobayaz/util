@@ -85,5 +85,29 @@ export default {
     // 得到交点
     getIntersection,
 
-    getDirection(startPos: Pos, endPos: Pos) {}
+    getDirection(
+        startPos: Pos,
+        endPos: Pos
+    ): Array<{ direction: "left" | "right"; point: Pos }> {
+        const [ey, ex] = [endPos[0], endPos[1]];
+        const [sy, sx] = [startPos[0], endPos[1]];
+
+        const k = parseFloat(((ey - sy) / (ex - sx)).toFixed(3));
+
+        const proportion = parseFloat((-1 / k).toFixed(3));
+
+        // const VectorProduct=
+
+        const leftDire: { direction: "left" | "right"; point: Pos } = {
+            direction: "left",
+            point: [1, proportion]
+        };
+
+        const rightDire: { direction: "left" | "right"; point: Pos } = {
+            direction: "right",
+            point: [-1, -proportion]
+        };
+
+        return [leftDire, rightDire];
+    }
 };

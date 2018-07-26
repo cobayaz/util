@@ -83,12 +83,6 @@ export default (allObj: Obj[], lineA1: Pos, LineA2: Pos): Array<Pos[][]> =>
                                 )
                             );
                             pieceOfArray.push(array[1].pos);
-
-                            // getDirection();
-
-                            // 确定偏移的方向
-                            // const direction: Pos = [];
-
                             return pieceOfArray;
                         }
                         case 1: {
